@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1994/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="LayoutTemplate">
+<head>
+<meta charset="UTF-8" />
+<title>Pesquisa de Titulos</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div class="container">
+	
+		<div layout:include="Mensagem"></div>
+	
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<div class="clearfix">
+					<h1 class="panel-title title-panel">Pesquisa de Titulos</h1>
+					<a class="btn btn-link link-panel" href="/titulo/novo"> Novo
+						Titulo</a>
+				</div>
+			</div>
+
+			<div class="panel-body">
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th class="text-center col-md-1">#</th>
+							<th>Descrição</th>
+							<th class="text-center col-md-2">Data Vencimento</th>
+							<th class="text-right col-md-2">Valor</th>
+							<th class="text-center col-md-2">Status</th>
+							<th class="col-md-1"></th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="lista : ${listTitles}">
+							<td class="text-center" th:text="${lista.codigo}"></td>
+							<td th:text="${lista.descricao}"></td>
+							<td class="text-center" th:text="${{lista.dataVencimento}}"></td>
+							<td class="text-right" th:text="|R$ ${{lista.valor}}|"></td>
+							<td class="text-center"><span class="label"
+								th:classappend="${lista.pendente ? 'label-danger' : 'label-success'}"
+								th:text="${lista.status.descricao}">Primary</span></td>
+							<td class="text-center"><a class="btn btn-link btn-xs"
+								th:href="@{/titulo/{codigo}(codigo=${lista.codigo})}"> <span
+									class="glyphicon glyphicon-pencil"></span>
+							</a> <a class="btn btn-link btn-xs" 
+									data-toggle="modal" data-target="#confirmationExclusion"
+								href="#" 
+								th:attr="data-code=${lista.codigo}, data-descricao=${lista.descricao}"> <span
+									class="glyphicon glyphicon-remove"></span>
+							</a></td>
+						</tr>
+						<tr th:if="${#lists.isEmpty(listTitles)}">
+							<td colspan="6">Nenhum resultado encontrado</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div layout:include="DialogConifrmationExclusion"></div>
+	
+</section>
+</html>

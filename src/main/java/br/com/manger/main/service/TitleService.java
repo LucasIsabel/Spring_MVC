@@ -1,5 +1,7 @@
 package br.com.manger.main.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,5 +19,17 @@ public class TitleService {
 	
 	public void saveTitulo(Titulo titulo){
 		repository.save(titulo);
+	}
+	
+	public List<Titulo> getAll(){
+		return repository.findAll();
+	}
+	
+	public Titulo findOne(Long code){
+		return repository.findOne(code);
+	}
+	
+	public void deleteTitle(Long codigo){
+		repository.delete(codigo);
 	}
 }

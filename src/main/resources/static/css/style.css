@@ -2,3 +2,24 @@
 	position: absolute;
 	margin-top: 3px;
 }
+
+.title-panel {
+	float: left;
+	padding-top: 2px;
+}
+
+.link-panel {
+	float: right;
+	padding: 0px;
+	color: #fff;
+}
+
+.link-panel:hover {
+	color: #ccc;
+	text-decoration: none;
+}
+
+.danger-message{
+	font-size: 0.9em;
+	margin-top: 5px;
+}

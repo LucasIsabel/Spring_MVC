@@ -1,52 +1,53 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1994/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1994/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="LayoutTemplate">
 <head>
 <meta charset="UTF-8" />
-<title>Register Title</title>
-<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-
+<title>Registro Title</title>
 </head>
-<body>
 
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<p>
-					<img src="/images/logo.png" />
-				</p>
-			</div>
-		</div>
-	</nav>
-
+<section layout:fragment="conteudo">
 	<div class="container">
+		<form class="form-horizontal" method="POST" action="/titulo/cadastro" th:object="${titulo}">
+			<div layout:include="Mensagem"> </div>
 
-		<form class="form-horizontal" method="POST" action="/titulo/cadastro">
+			<input type="hidden" th:field="*{codigo}" />
+
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h1 class="panel-title">Register Title</h1>
+				<div class="clearfix">
+					<h1 class="panel-title title-panel">Registrar Titulo</h1>
+					<a class="btn btn-link link-panel" href="/titulo"> Ver Titulos</a>
+				</div>
 				</div>
 				<div class="panel-body">
 
-					<div class="form-group">
+					<div class="form-group" th:classappend="${#fields.hasErrors('descricao')} ? 'has-error'">
 						<label for="descricao" class="col-sm-2 control-label">Descrição</label>
 						<div class="col-sm-4">
-							<input type="text" name="descricao" class="form-control" id="descricao" />
+							<input type="text" name="descricao" class="form-control"
+								id="descricao" th:field="*{descricao}" />
+							<div class="list-group-item list-group-item-danger danger-message" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}">Error</div>
 						</div>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group" th:classappend="${#fields.hasErrors('dataVencimento')} ? 'has-error'">
 						<label for="dataVencimento" class="col-sm-2 control-label">Data
 							de Vencimento</label>
 						<div class="col-sm-2">
-							<input type="text" name="dataVencimento" class="form-control" id="dataVencimento" />
+							<input type="text" name="dataVencimento" class="form-control"
+								id="dataVencimento" th:field="*{dataVencimento}"/>
+								<div class="list-group-item list-group-item-danger danger-message" th:if="${#fields.hasErrors('dataVencimento')}" th:errors="*{dataVencimento}">Error</div>
 						</div>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group" th:classappend="${#fields.hasErrors('valor')} ? 'has-error'">
 						<label for="valor" class="col-sm-2 control-label">Valor</label>
 						<div class="col-sm-2">
-							<input type="text" name="valor" class="form-control" id="valor" />
+							<input type="text" name="valor" class="form-control" id="valor" th:field="*{valor}"/>
+							<div class="list-group-item list-group-item-danger danger-message" th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}">Error</div>
 						</div>
 					</div>
 
@@ -54,24 +55,22 @@
 						<label for="status" class="col-sm-2 control-label">Status</label>
 						<div class="col-sm-2">
 							<select class="form-control" name="status">
-								<option value="PENDENTE">Pendente</option>
-								<option value="RECEBIDO">Recebido</option>
+								<option th:each="status : ${statusTitutlo}" th:value="${status}"
+									th:text="${status.descricao}"></option>
 							</select>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<button class="btn btn-primary"> Salvar </button>
+							<button class="btn btn-primary">Salvar</button>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</form>
-
 	</div>
+	
+</section>
 
-	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-</body>
 </html>
